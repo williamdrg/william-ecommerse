@@ -41,11 +41,11 @@ const HomePage = () => {
       </div>
       <div className="conainter_cards">
         <InputSearch setInputValue={setInputValue} products={products}/>
-      <div className="slider_container">
-        <ProductSlider products={products}/>
-      </div>
       <div className="filter_icon"><span onClick={toggleSidebar}><FontAwesomeIcon icon={faFilter}/> Filters</span></div>
         <div className="products_container">
+        <div className="slider_container">
+          <ProductSlider products={products}/>
+        </div>
         {
           products?.filter(filtersproducts).map(product => (
             <Products key={product.id}

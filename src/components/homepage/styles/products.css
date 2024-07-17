@@ -58,13 +58,15 @@
 }
 
 .product_status {
-  background-color: #4caf50;
-  color: #fff;
+  /* background-color: #4caf50; */
+  /* color: #fff; */
+  color: #4caf50;
   display: inline-block;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 0.8em;
   margin: 3px 0;
+  font-weight: 800;
 }
 
 .product_quantity {
