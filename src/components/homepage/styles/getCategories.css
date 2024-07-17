@@ -1,0 +1,38 @@
+.filter_section {
+  margin-bottom: 20px;
+}
+
+.filter_header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid rgb(182, 175, 175);
+  margin: 5px;
+}
+
+.filter_header span {
+  font-weight: 600;
+}
+
+.filter_content {
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.category_item {
+  /* border: 2px solid black; */
+  padding: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+} 
+
+.category_item:hover {
+  background-color: #e0e0e0;
+}
+
+.category_item.active {
+  background-color: #d1e7dd;
+  font-weight: bold;
+  color: #0c5460;
+}

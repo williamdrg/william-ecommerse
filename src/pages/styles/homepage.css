@@ -1,0 +1,156 @@
+.homepage {
+  display: flex;
+  height: calc(100vh - 60px);
+  /* flex-direction: column; */
+}
+
+.filter_icon {
+  display: none;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #a79a9a;
+}
+
+.filter_icon span {
+  cursor: pointer;
+}
+
+.products_container {
+  display: flex;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-evenly;
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+
+  scrollbar-width: none;
+  scrollbar-color: #888 #e0e0e0;
+}
+
+.products_container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.products_container::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+.products_container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  background-clip: content-box;
+}
+
+.sidebar_container {
+  width: 250px;
+  background-color: white;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.sidebar_container.visible {
+  transform: translateX(0);
+}
+
+.conainter_cards {
+  flex: 1;
+  margin: 0px 10px 0px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.close_sidebar {
+  display: none;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  display: none;
+  cursor: pointer;
+}
+
+.menu-button svg {
+  width: 24px;
+  height: 24px;
+  color: #E67E22;
+}
+
+.slider_container {
+  width: 100%;
+  margin: 20px 0 0 0;
+  overflow: hidden;
+  height: 320px;
+  background: #ECF0F1;
+}
+
+@media (max-width: 768px) {
+  .filter_icon {
+    display: flex;
+    justify-content: end;
+    margin-right: 10px;
+  }
+
+  .sidebar_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    z-index: 10;
+  }
+
+  .sidebar_container.visible {
+    transform: translateX(0);
+  }
+
+  .container_cards {
+    margin-left: 0;
+  }
+
+  .close_sidebar {
+    display: flex;
+    justify-content: end;
+    margin: 8px 10px; 
+    color: gray;
+    font-size: 20px;
+    cursor: pointer;   
+  }
+
+  .menu-button {
+    display: block;
+  }
+  .btn_container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn_container.open {
+    display: flex;
+  }
+  .slider_container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.5rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .btn_container {
+    font-size: 1.5rem;
+  }
+  .user_image {
+    width: 30px;
+    height: 30px;
+  }
+}

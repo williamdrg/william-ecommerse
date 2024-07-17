@@ -1,0 +1,145 @@
+.product_details_container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+}
+
+.back_home a {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  color: #687f7b;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back_home a span {
+  margin-left: 10px;
+}
+
+.back_home a:hover {
+  color: #495151;
+}
+
+.product_details {
+  display: flex;
+  align-items: center;
+}
+
+.product_det_image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.product_det_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product_det_name {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.product_det_description {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.product_det_price {
+  font-size: 1.2em;
+}
+
+.product_det_price span:first-child,
+.btn_det_quantity label {
+  color: gray;
+}
+
+.product_det_price span:nth-child(2) {
+  font-weight: 600;
+}
+
+.quantity_det_controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  justify-content:space-evenly;
+}
+
+.quantity_det_controls button {
+  font-size: 1.2em;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.quantity_det_controls input {
+  width: 50px;
+  text-align: center;
+  font-size: 1.2em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.det_add_to_cart {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.add-to-cart:hover {
+  background-color: #218838;
+}
+
+.product_det_aviablequantity {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .product_details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quantity_det_controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product_det_image {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .product_det_name {
+    margin-top: 10px;
+    font-size: 22px;
+  }
+  .product_det_info {
+    align-items: flex-start;
+  }
+
+  .product_det_description {
+    text-align: left;
+    font-size: 14px;
+  }
+}

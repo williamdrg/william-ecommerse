@@ -1,0 +1,156 @@
+.header {
+  background-color: #2C3E50;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+}
+.header h1 {
+  color: rgb(243, 123, 68);
+  align-self: center;
+}
+.header a {
+  align-self: center;
+}
+
+.btn_container {
+  display: flex;
+  /* width: 250px; */
+  justify-content: space-evenly;
+  font-size: 2rem;
+  color: #E67E22;
+  align-items: center;
+}
+
+.btn_container h3 {
+  font-size: 20px;
+}
+
+.btn_user,
+.btn_purchase,
+.btn_cart,
+.btn_logout,
+.user_image {
+  padding: 0.5rem;
+  transition: transform 0.5s;
+}
+
+.btn_user a,
+.btn_purchase a,
+.btn_cart a,
+.btn_logout a
+ {
+  color: #E67E22;
+}
+
+.btn_user:hover,
+.btn_purchase:hover,
+.btn_cart:hover,
+.btn_logout:hover,
+.user_image:hover {
+  scale: 1.1;
+  cursor: pointer;
+  transition: scale 0.5s;
+}
+
+.user_image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 0 10px 0 10px;
+  /* border: 1px solid #E67E22; */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 2px;
+}
+
+.btn_cart {
+  position: relative;
+}
+
+.cart_count {
+  position: absolute;
+  top: 2px;
+  right: -5px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 8px;
+  font-size: 0.5em;
+  font-weight: bold;
+}
+
+.cart_count_close {
+  display: none;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  display: none;
+  cursor: pointer;
+}
+
+.menu-button svg {
+  width: 24px;
+  height: 24px;
+  color: #E67E22;
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+  .btn_container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #2C3E50;
+    border: none;
+    width: 100%;
+    max-width: 250px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 12;
+    padding: 10px;
+  }
+  .btn_container.open {
+    display: flex;
+  }
+  .header {
+    padding: 1rem;
+  }
+  .header h1 {
+    margin-bottom: 0;
+  }
+  .btn_container h3 {
+    display: none;
+  }
+  .user_image {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.5rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .btn_container {
+    font-size: 1.5rem;
+  }
+  .user_image {
+    width: 30px;
+    height: 30px;
+  }
+}

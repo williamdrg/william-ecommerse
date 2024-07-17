@@ -1,0 +1,31 @@
+
+.title_filterprice {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px;
+}
+
+.line_filterprice {
+  border: 1px solid rgb(182, 175, 175);
+  margin: 5px;
+}
+
+.filterprice {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+}
+
+.filter_min,
+.filter_max {
+  display: flex;
+  gap: 5px;
+}
+
+.filterprice button {
+  align-self: center;
+  padding: 8px;
+}

@@ -1,0 +1,38 @@
+.main-purchases-container {
+  width: 80%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+
+.main-purchases-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-purchases-container::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+.main-purchases-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  background-clip: content-box;
+}
+
+.main-purchases-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.purchases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
