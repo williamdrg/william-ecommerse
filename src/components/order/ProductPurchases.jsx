@@ -29,7 +29,7 @@ const ProductPurchases = ({ product, createdAt }) => {
 
   return (
     <div className="purchases-container">
-      {product.map(prod => (
+      {product?.map(prod => (
         <div onClick={() => handleRpductDetails(prod.Product.id)} className="purchase-item" key={prod.id}>
           <figure>
             <img src={prod.Product.productImage} alt={prod.Product.name} />

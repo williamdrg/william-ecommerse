@@ -14,7 +14,7 @@
 }
 
 .cart_container h2 {
-  padding: 20px 0 0 20px;
+  padding: 0 0 0 20px;
 }
 
 .cart_container.visible {
@@ -129,6 +129,15 @@
 
 .cart_total_checkout button:hover {
   background-color: #218838;
+}
+
+.close_cart {
+  display: flex;
+  justify-content: end;
+  margin: 8px 10px; 
+  color: gray;
+  font-size: 20px;
+  cursor: pointer;  
 }
 
 @media (max-width: 768px) {

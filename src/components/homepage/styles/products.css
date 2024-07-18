@@ -193,3 +193,9 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+@media (max-width: 468px) {
+  .product_price p {
+    font-size: 1rem;
+  }
+}

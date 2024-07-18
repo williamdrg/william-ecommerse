@@ -2,21 +2,27 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserThunk } from "../../store/slices/auth.slice";
 
 
 
 const UpdateUsers = ({ setIsEditingProfile }) => {
-  const { handleSubmit, register, reset } = useForm()
+  const { handleSubmit, register, reset, setValue } = useForm()
   const [ modalContent, setModalContent ] = useState('');
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ isSuccess, setIsSuccess ] = useState(false);
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.authSlice.user);
+
+  useEffect(() => {
+    setValue('username', user.username);
+  }, [user, setValue]);
+
   const submit = async (data) => {
     const formData = new FormData();
-    formData.append('username', data.username);
+    formData.append('username', data.username || user.username);
     if (data.avatar && data.avatar.length > 0) {
       formData.append('avatar', data.avatar[0]);
     }
@@ -25,7 +31,7 @@ const UpdateUsers = ({ setIsEditingProfile }) => {
     setIsSuccess(true);
     setIsModalOpen(true);
     reset({
-      username: '',
+      username: user.username,
       avatar: ''
     });
     setIsEditingProfile(false)

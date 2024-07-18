@@ -31,7 +31,7 @@ const HomePage = () => {
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible)
   }
-
+  
   return (
     <div className="homepage">
       <div className={`sidebar_container ${isSidebarVisible ? 'visible' : ''}`}>

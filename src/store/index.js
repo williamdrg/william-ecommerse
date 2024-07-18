@@ -4,6 +4,7 @@ import toggleCartVisibility from "./slices/isVisibleCart.slice";
 import cart from "./slices/cart.slice";
 import orderSlice from "./slices/order.slice";
 import productSlice from "./slices/product.slice";
+import modalSlice from "./slices/modal.slice";
 
 
 
@@ -13,7 +14,8 @@ const store = configureStore({
     toggleCartVisibility,
     cart,
     order: orderSlice,
-    product: productSlice  
+    product: productSlice,
+    modal: modalSlice  
   }
 })
 

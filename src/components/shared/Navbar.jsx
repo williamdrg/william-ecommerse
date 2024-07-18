@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/auth.slice';
 import { Link, useNavigate } from "react-router-dom"
 import { setIsCartVisible } from '../../store/slices/isVisibleCart.slice';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -14,11 +14,15 @@ const Navbar = () => {
   const avatarUrl = useSelector(state => state.authSlice.user.avatarUrl);
   const isCartVisible = useSelector(state => state.toggleCartVisibility);
   const cart = useSelector(state => state.cart);
-  let totalItems = cart.products ? cart.products.length : 0;
 
+  const [ totalItems, setTotalItems ] = useState(0);
   const [ menuOpen, setMenuOpen ] = useState(false);
   const [ closeQuantityCart, setCloseQuantitCart ] = useState(false)
  
+  useEffect(() => {
+    setTotalItems(cart.products ? cart.products.length : 0);
+  }, [cart.products]);
+
   const toggleCartVisibility = () => {
     dispatch(setIsCartVisible(!isCartVisible));
     setMenuOpen(false);
@@ -31,7 +35,7 @@ const Navbar = () => {
   const handlerLogout = () => {
     dispatch(logout())
     setMenuOpen(false)
-    setCloseQuantitCart(true)
+    setCloseQuantitCart(!closeQuantityCart)
   }
 
   return (
@@ -56,7 +60,7 @@ const Navbar = () => {
           <div onClick={toggleMenu} className='btn_user'><Link to='/login'><FontAwesomeIcon icon={faUser} /></Link></div>
         }
           <div onClick={toggleMenu} className='btn_purchase'><Link to='/order'><FontAwesomeIcon icon={faShop}/></Link></div>
-          <div className='btn_cart' onClick={toggleCartVisibility}><FontAwesomeIcon icon={faCartShopping}/>{totalItems > 0 && <span className={`cart_count ${closeQuantityCart ? 'cart_count_close' : ''}`}>{totalItems}</span>}</div>
+          <div className='btn_cart' onClick={toggleCartVisibility}><FontAwesomeIcon icon={faCartShopping}/>{Number(totalItems) > 0 && <span className={`cart_count ${closeQuantityCart ? 'cart_count_close' : ''}`}>{totalItems}</span>}</div>
       </div>
     </header>
   )

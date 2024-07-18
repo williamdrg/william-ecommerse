@@ -8,16 +8,16 @@ const Order = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-      dispatch(getOrderThunk())
-  })
+    dispatch(getOrderThunk())
+  },[])
 
   const order = useSelector(store => store.order)
-
+ 
   return (
     <div className="main-purchases-container">
     <h2>My purchases</h2>
     <div className="purchases-list">
-      {order.map(prod => (
+      {order?.map(prod => (
         <ProductPurchases 
           key={prod.id} 
           product={prod.ProductInOrders}

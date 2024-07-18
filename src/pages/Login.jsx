@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserThunk, initializeAuth, login } from '../store/slices/auth.slice';
+import { getUserThunk, login } from '../store/slices/auth.slice';
 import './styles/login.css'
 import UserProfile from "../components/Login/UserProfile";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 const Login = () => {

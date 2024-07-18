@@ -3,14 +3,20 @@ import  './styles/cart.css'
 import { deleteProductThunk, getCartProductThunk, updateProductQuantity } from '../../store/slices/cart.slice';
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { postOrderThunk } from '../../store/slices/order.slice';
+import { setIsCartVisible } from '../../store/slices/isVisibleCart.slice';
+import { showModal } from '../../store/slices/modal.slice';
+import Modal from '../shared/Modal';
 
 const Cart = () => {
   const dispatch = useDispatch()
   const isVisible = useSelector(state => state.toggleCartVisibility);
   const cart = useSelector(store => store.cart)
   const { products } = cart
+  const isCartVisible = useSelector(state => state.toggleCartVisibility);
+  const modal = useSelector(state => state.modal); 
+
   useEffect(() => {
     dispatch(getCartProductThunk())
   }, [dispatch])
@@ -36,9 +42,18 @@ const Cart = () => {
     }
   };
 
-  const hqandlerPurchased = () => {
-    dispatch(postOrderThunk())
+  const handlePurchased = async () => {
+    try {
+      const response = await dispatch(postOrderThunk());
+      dispatch(showModal({ message: response.message, type: 'success' }));
+    } catch (error) {
+      dispatch(showModal({ message: error.message, type: 'error' }));
+    }
   }
+
+  const toggleCartVisibility = () => {
+    dispatch(setIsCartVisible(!isCartVisible));
+  };
 
   const formatPrice = (price) => {
     const numberPrice = parseFloat(price);
@@ -48,10 +63,9 @@ const Cart = () => {
     return `${formattedIntegerPart},${parts[1]}`;
   };
 
-
   return (
     <div className={`cart_container ${isVisible ? 'visible' : ''}`}>
-      {/* <div className='close_cart' onClick={toggleMenu}><FontAwesomeIcon icon={faXmark}/></div> */}
+      <div className='close_cart' onClick={toggleCartVisibility}><FontAwesomeIcon icon={faXmark}/></div>
       <h2>shopping cart</h2>
       <div className="cart_products_scroll">
         {products ? (
@@ -84,8 +98,9 @@ const Cart = () => {
       </div>
       <div className='cart_total_checkout'>
         <div className="total_price"><span>Total: </span><span>$ {formatPrice(cart.totalPrice)}</span></div>
-        <button onClick={hqandlerPurchased}>Checkout</button>
+        <button onClick={handlePurchased}>Checkout</button>
       </div>
+      {modal.isVisible && <Modal message={modal.message} type={modal.type} />}
     </div>
   )
 }
