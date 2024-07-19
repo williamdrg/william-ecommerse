@@ -95,3 +95,9 @@
     padding: 8px;
   }
 }
+
+@media (max-width: 428px) {
+  .product_info_slider {
+    font-size: 0.7rem;
+  }
+}

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postProductThunk } from '../../store/slices/cart.slice';
 import { getProductThunk } from '../../store/slices/product.slice';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../shared/Loader';
 
 const Products = ({ product }) => {
   const {

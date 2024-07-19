@@ -3,6 +3,7 @@ import axios from "axios";
 import urlBase from "../../utils/urlBase";
 import bearerToken from "../../utils/bearerToken";
 import { setLoading } from "./loader.slice";
+import { showModal } from "./modal.slice";
 
 const cart = createSlice({
   name: 'cart',
@@ -39,10 +40,13 @@ export const getCartProductThunk = () => async (dispatch) => {
 export const postProductThunk = (data) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axios.post(`${urlBase}/product_cart`, data, bearerToken());
+    const res = await axios.post(`${urlBase}/product_cart`, data, bearerToken());
     dispatch(getCartProductThunk());
+    dispatch(showModal({ message: 'Product added to cart successfully', type: 'success' }));
+    return res.data;
   } catch (err) {
     console.error(err);
+    dispatch(showModal({ message: 'Failed to add product to cart', type: 'error' }));
   } finally {
     dispatch(setLoading(false));
   }

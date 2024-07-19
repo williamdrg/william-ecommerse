@@ -23,9 +23,17 @@
 .filter_max {
   display: flex;
   gap: 5px;
+  /* border: 2px solid */
 }
 
 .filterprice button {
   align-self: center;
   padding: 8px;
+}
+
+@media (max-width: 420px) {
+  .filter_min input,
+  .filter_max input {
+   width: 150px;
+  }
 }

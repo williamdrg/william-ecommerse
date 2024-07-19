@@ -1,32 +1,31 @@
 import { useForm } from "react-hook-form"
 import './styles/register.css'
 import useAuth from "../hooks/useAuth"
-import { useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { hideModal, showModal } from "../store/slices/modal.slice"
+import Modal from "../components/shared/Modal"
 
 const Register = () => {
   const { handleSubmit, register, reset, watch, formState: { errors } } = useForm()
-  const [ modalContent, setModalContent ] = useState('');
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
-  const [ isSuccess, setIsSuccess ] = useState(false);
   const { registerUser } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const modal = useSelector(state => state.modal);
 
   const password = watch('password', '');
 
   const submit = async data => {
     try {
       await registerUser('/users', data);
-      setModalContent('Usuario creado exitosamente');
-      setIsSuccess(true);
-      setTimeout(() => navigate('/login'), 3000);
+      dispatch(showModal({ message: 'Usuario creado exitosamente', type: 'success' }));
+      setTimeout(() => {
+        navigate('/login');
+        dispatch(hideModal());
+      }, 3000);
     } catch (error) {
-      setModalContent(`Error: ${error.message}`);
-      setIsSuccess(false);
+      dispatch(showModal({ message: `Error: ${error.message}`, type: 'error' }));
     } finally {
-      setIsModalOpen(true);
       reset({
         username: '',
         email: '',
@@ -67,20 +66,7 @@ const Register = () => {
         <button>Submit</button>
         <p className="signin">Already have an acount ? <Link to='/login'>Log in</Link> </p>
       </form>
-
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal_content">
-            {isSuccess ? (
-              <FontAwesomeIcon icon={faCheck} className="icon_success" />
-            ) : (
-              <FontAwesomeIcon icon={faCircleXmark} className="icon_error" />
-            )}
-            <span className="close" onClick={() => setIsModalOpen(false)}>&times;</span>
-            <p>{modalContent}</p>
-          </div>
-        </div>
-      )}
+      {modal.isVisible && <Modal message={modal.message} type={modal.type} />}
     </div>
   )
 }
