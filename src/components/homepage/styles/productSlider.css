@@ -100,4 +100,10 @@
   .product_info_slider {
     font-size: 0.7rem;
   }
+  .product_info_slider h2 {
+    padding-top: 8px;
+  }
+  .img_container img {
+    width: 80%;
+  }
 }
