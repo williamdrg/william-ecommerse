@@ -60,3 +60,11 @@
   background-color: #BDC3C7;
   color: var(--button-text-color);
 }
+
+@media (max-width: 428px) {
+  .btn_user_profile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './styles/products.css';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postProductThunk } from '../../store/slices/cart.slice';
 import { getProductThunk } from '../../store/slices/product.slice';
 import { useNavigate } from 'react-router-dom';
@@ -17,12 +17,17 @@ const Products = ({ product }) => {
   } = product;
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const isAuthenticated = useSelector(state => state.authSlice.isAuthenticated);
 
   const handleAddCart = () => {
-    dispatch(postProductThunk({
-      'quantity': 1, 
-      'productId': product.id
-    }))
+    if (isAuthenticated) {
+      dispatch(postProductThunk({
+        'quantity': 1, 
+        'productId': product.id
+      }))
+    } else {
+      navigate('/login')
+    }
   }
 
   const handleRpductDetails = () => {

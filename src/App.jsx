@@ -6,18 +6,20 @@ import Navbar from './components/shared/Navbar'
 import Register from './pages/Register'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { initializeAuth, setLoading } from './store/slices/auth.slice'
+import { initializeAuth } from './store/slices/auth.slice'
 import Order from './pages/Order'
 import Cart from './components/homepage/Cart'
 import ProductDetails from './pages/ProductDetails'
 import ResetPassword from './pages/ResetPassword'
 import ProtectedRoutes from './pages/ProtectedRoutes'
 import ProtectedComponent from './components/shared/ProtectedComponent'
+import Loader from './components/shared/Loader'
+import { setLoading } from './store/slices/loader.slice'
 
 function App() {
 
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.authSlice.isLoading);
+  const isLoading = useSelector(state => state.loader);
   const isAuthenticated = useSelector(state => state.authSlice.isAuthenticated);
     
   useEffect(() => {
@@ -25,12 +27,9 @@ function App() {
     dispatch(initializeAuth());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <div className='loading_app'>Loading...</div>;
-  }
-
-  return (
+  return (   
     <div>
+      {isLoading && <Loader/>}
       <Navbar/>
       {
         isAuthenticated &&

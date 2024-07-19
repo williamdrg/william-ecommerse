@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import urlBase from "../../utils/urlBase";
+import { setLoading } from "./loader.slice";
 
 const productSlice = createSlice({
   name: 'product',
@@ -13,8 +14,14 @@ const productSlice = createSlice({
 export const { setProduct } = productSlice.actions
 export default productSlice.reducer
 
-export const getProductThunk = (id) => (dispatch) => {
-  axios.get(`${urlBase}/products/${id}`)
-    .then((res) => dispatch(setProduct(res.data)))
-    .catch(err => console.error(err))
+export const getProductThunk = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const res = await axios.get(`${urlBase}/products/${id}`);
+    dispatch(setProduct(res.data));
+  } catch (err) {
+    console.error(err);
+  } finally {
+    dispatch(setLoading(false));
+  }
 }

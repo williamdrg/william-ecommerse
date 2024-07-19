@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { getProductThunk } from "../store/slices/product.slice"
 import './styles/productDetails.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -13,6 +13,8 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const product = useSelector(store => store.product);
   const [ quantity, setQuantity ] = useState(1);
+  const isAuthenticated = useSelector(state => state.authSlice.isAuthenticated);
+  const navigate = useNavigate()
 
   const formatPrice = (price) => {
     const numberPrice = parseFloat(price);
@@ -46,11 +48,15 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
+    if (isAuthenticated) {
       dispatch(postProductThunk({
         'quantity': quantity, 
         'productId': product.id
       }))
       setQuantity(1);
+    } else {
+      navigate('/login')
+    }
   };
 
   return (

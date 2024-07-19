@@ -5,6 +5,7 @@ import cart from "./slices/cart.slice";
 import orderSlice from "./slices/order.slice";
 import productSlice from "./slices/product.slice";
 import modalSlice from "./slices/modal.slice";
+import loadingSlice from "./slices/loader.slice";
 
 
 
@@ -15,7 +16,8 @@ const store = configureStore({
     cart,
     order: orderSlice,
     product: productSlice,
-    modal: modalSlice  
+    modal: modalSlice,
+    loader: loadingSlice
   }
 })
 

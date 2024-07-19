@@ -3,6 +3,7 @@ import axios from "axios";
 import bearerToken from "../../utils/bearerToken";
 import urlBase from "../../utils/urlBase";
 import { jwtDecode } from "jwt-decode";
+import { setLoading } from "./loader.slice";
 
 const authSlice = createSlice({
   name: 'auth',
@@ -10,9 +11,8 @@ const authSlice = createSlice({
     id: null,
     username: '',
     email: '',
-    avatarUrl: ''
-  },
-  isLoading: true },
+    avatarUrl: '',
+  }},
   reducers: {
     login: (state, action) => {
       const token = action.payload;
@@ -37,17 +37,15 @@ const authSlice = createSlice({
     },
     setUserDetails: (state, action) => {
       state.user = action.payload;
+      state.isLoading = false;
     },
     updateUserDetails: (state, action) => {
       state.user = { ...state.user, ...action.payload };
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
     }
   }
 })
 
-export const { login, logout, setUserDetails, updateUserDetails, setLoading } = authSlice.actions
+export const { login, logout, setUserDetails, updateUserDetails } = authSlice.actions
 
 export default authSlice.reducer
 
@@ -71,6 +69,7 @@ export const checkTokenExpiration = () => dispatch => {
 };
 
 export const initializeAuth = () => (dispatch) => {
+  dispatch(setLoading(true));
   const token = localStorage.getItem('token');
   if (token) {
     const decoded = jwtDecode(token);
@@ -86,6 +85,7 @@ export const initializeAuth = () => (dispatch) => {
 };
 
 export const getUserThunk = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
   const url = `${urlBase}/user/${id}`
   await axios.get(url)
     .then((res) => {
@@ -96,14 +96,21 @@ export const getUserThunk = (id) => async (dispatch) => {
       delete userData.avatar;
       dispatch(setUserDetails(userData))
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.error(err)
+      dispatch(setLoading(false));
+    })
 }
 
 export const updateUserThunk = (data) => async (dispatch) => {
+  dispatch(setLoading(true));
   const url = `${urlBase}/update/users`;
   await axios.put(url, data, bearerToken())
     .then((res) => {
       dispatch(updateUserDetails(res.data.user));
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err)
+      dispatch(setLoading(false));
+    });
 };
