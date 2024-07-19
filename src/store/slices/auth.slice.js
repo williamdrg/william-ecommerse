@@ -68,49 +68,52 @@ export const checkTokenExpiration = () => dispatch => {
   }
 };
 
-export const initializeAuth = () => (dispatch) => {
+export const initializeAuth = () => async (dispatch) => {
   dispatch(setLoading(true));
-  const token = localStorage.getItem('token');
-  if (token) {
-    const decoded = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-    if (decoded.exp < currentTime) {
-      dispatch(logout());
-    } else {
-      dispatch(login(token));
-      dispatch(getUserThunk(decoded.id));
+  try {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        dispatch(logout());
+      } else {
+        dispatch(login(token));
+        await dispatch(getUserThunk(decoded.id));
+      }
     }
+  } finally {
+    dispatch(setLoading(false));
   }
-  dispatch(setLoading(false));
 };
 
 export const getUserThunk = (id) => async (dispatch) => {
   dispatch(setLoading(true));
-  const url = `${urlBase}/user/${id}`
-  await axios.get(url)
-    .then((res) => {
-      const userData = {
-        ...res.data,
-        avatarUrl: res.data.avatar
-      };
-      delete userData.avatar;
-      dispatch(setUserDetails(userData))
-    })
-    .catch((err) => {
-      console.error(err)
-      dispatch(setLoading(false));
-    })
-}
+  try {
+    const url = `${urlBase}/user/${id}`;
+    const res = await axios.get(url);
+    const userData = {
+      ...res.data,
+      avatarUrl: res.data.avatar
+    };
+    delete userData.avatar;
+    dispatch(setUserDetails(userData));
+  } catch (err) {
+    console.error(err);
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 export const updateUserThunk = (data) => async (dispatch) => {
   dispatch(setLoading(true));
-  const url = `${urlBase}/update/users`;
-  await axios.put(url, data, bearerToken())
-    .then((res) => {
-      dispatch(updateUserDetails(res.data.user));
-    })
-    .catch((err) => {
-      console.error(err)
-      dispatch(setLoading(false));
-    });
+  try {
+    const url = `${urlBase}/update/users`;
+    const res = await axios.put(url, data, bearerToken());
+    dispatch(updateUserDetails(res.data.user));
+  } catch (err) {
+    console.error(err);
+  } finally {
+    dispatch(setLoading(false));
+  }
 };
