@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserThunk } from "../../store/slices/auth.slice";
+import Modal from "../shared/Modal";
 
 
 
 const UpdateUsers = ({ setIsEditingProfile }) => {
   const { handleSubmit, register, reset, setValue } = useForm()
-  const [ modalContent, setModalContent ] = useState('');
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
-  const [ isSuccess, setIsSuccess ] = useState(false);
   const dispatch = useDispatch();
-
+  const modalState = useSelector(state => state.modal);
   const user = useSelector(state => state.authSlice.user);
 
   useEffect(() => {
@@ -27,24 +23,12 @@ const UpdateUsers = ({ setIsEditingProfile }) => {
       formData.append('avatar', data.avatar[0]);
     }
     await dispatch(updateUserThunk(formData));
-    setModalContent('User updated successfully');
-    setIsSuccess(true);
-    setIsModalOpen(true);
+    setIsEditingProfile(false);
     reset({
       username: user.username,
       avatar: ''
     });
-    setIsEditingProfile(false)
   };
-
-  useEffect(() => {
-    if (isModalOpen) {
-      const timer = setTimeout(() => {
-        setIsModalOpen(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isModalOpen]);
 
   return (
     <div>
@@ -60,20 +44,7 @@ const UpdateUsers = ({ setIsEditingProfile }) => {
         </div>
         <button>Submit</button>
       </form>
-
-    {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            {isSuccess ? (
-              <FontAwesomeIcon icon={faCheck} className="icon-success" />
-            ) : (
-              <FontAwesomeIcon icon={faCircleXmark} className="icon-error" />
-            )}
-            <span className="close" onClick={() => setIsModalOpen(false)}>&times;</span>
-            <p>{modalContent}</p>
-          </div>
-        </div>
-      )}
+      {modalState.isVisible && <Modal message={modalState.message} type={modalState.type} />}
     </div>
   )
 }

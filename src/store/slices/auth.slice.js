@@ -4,6 +4,7 @@ import bearerToken from "../../utils/bearerToken";
 import urlBase from "../../utils/urlBase";
 import { jwtDecode } from "jwt-decode";
 import { setLoading } from "./loader.slice";
+import { showModal } from "./modal.slice";
 
 const authSlice = createSlice({
   name: 'auth',
@@ -111,8 +112,10 @@ export const updateUserThunk = (data) => async (dispatch) => {
     const url = `${urlBase}/update/users`;
     const res = await axios.put(url, data, bearerToken());
     dispatch(updateUserDetails(res.data.user));
+    dispatch(showModal({ message: 'User updated successfully', type: 'success' }));
   } catch (err) {
     console.error(err);
+    dispatch(showModal({ message: `Error: ${err.message}`, type: 'error' }));
   } finally {
     dispatch(setLoading(false));
   }

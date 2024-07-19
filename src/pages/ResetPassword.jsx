@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form"
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { hideModal, showModal } from "../store/slices/modal.slice";
+import Modal from "../components/shared/Modal";
 
 
 const ResetPassword = () => {
@@ -11,9 +11,8 @@ const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { resetPassword, error } = useAuth();
-  const [ modalContent, setModalContent ] = useState('');
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
-  const [ isSuccess, setIsSuccess ] = useState(false);
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modal);
 
   const token = searchParams.get('token');
   const password = watch('password', '');
@@ -26,14 +25,11 @@ const ResetPassword = () => {
 
     try {
       const response = await resetPassword(payload);
-      setModalContent(response.message || "Password updated successfully.");
-      setIsSuccess(true);
+      dispatch(showModal({ message: response.message || "Password updated successfully.", type: 'success' }));
     } catch (error) {
       console.error("Error updating password:", error);
-      setModalContent("There was an error updating your password.");
-      setIsSuccess(false);
+      dispatch(showModal({ message: "There was an error updating your password.", type: 'error' }));
     } finally {
-      setIsModalOpen(true);
       reset({
         password: '',
         confirmPassword: '',
@@ -42,12 +38,11 @@ const ResetPassword = () => {
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    if (isSuccess) {
+    dispatch(hideModal());
+    if (modalState.type === 'success') {
       navigate('/login');
     }
   };
-
   return (
     <div>
       <form className="register_form" onSubmit={handleSubmit(submit)}>
@@ -72,20 +67,7 @@ const ResetPassword = () => {
           <button>Submit</button>
           {error && <p className="error">{error}</p>}
         </form>
-
-        {isModalOpen && (
-        <div className="modal">
-          <div className="modal_content">
-            {isSuccess ? (
-              <FontAwesomeIcon icon={faCheck} className="icon_success" />
-            ) : (
-              <FontAwesomeIcon icon={faCircleXmark} className="icon_error" />
-            )}
-            <span className="close" onClick={closeModal}>&times;</span>
-            <p>{modalContent}</p>
-          </div>
-        </div>
-      )}
+        {modalState.isVisible && <Modal message={modalState.message} type={modalState.type} onClose={closeModal} />}
     </div>
   )
 }

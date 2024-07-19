@@ -1,38 +1,30 @@
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import './styles/userProfile.css'
 import { useState } from 'react';
 import UpdateUsers from './UpdateUsers';
 import useAuth from '../../hooks/useAuth';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { showModal } from '../../store/slices/modal.slice';
+import Modal from '../shared/Modal';
 
 const UserProfile = () => {
   const username = useSelector(state => state.authSlice.user.username);
   const avatarUrl = useSelector(state => state.authSlice.user.avatarUrl);
   const email = useSelector(state => state.authSlice.user.email);
+  const modal = useSelector(state => state.modal);
   const { submitPassword } = useAuth()
+  const dispatch = useDispatch();
 
   const [ isEditingProfile, setIsEditingProfile ] = useState(false);
-  const [ modalContent, setModalContent ] = useState('');
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
-  const [ isSuccess, setIsSuccess ] = useState(false);
+
 
   const handlerResetPassword = async () => {
     try {
       await submitPassword({ email });
-      setModalContent('Please check your email to reset your password.');
-      setIsSuccess(true);
+      dispatch(showModal({ message: 'Please check your email to reset your password.', type: 'success' }));
     } catch (error) {
       console.error("Error during password reset:", error);
-      setModalContent('There was an error. Please try again.');
-      setIsSuccess(false);
-    } finally {
-      setIsModalOpen(true);
+      dispatch(showModal({ message: 'There was an error. Please try again.', type: 'error' }));
     }
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -48,20 +40,7 @@ const UserProfile = () => {
           </div>
       </div>
       {isEditingProfile && <UpdateUsers setIsEditingProfile={setIsEditingProfile}/>}
-
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal_content">
-            {isSuccess ? (
-              <FontAwesomeIcon icon={faCheck} className="icon_success" />
-            ) : (
-              <FontAwesomeIcon icon={faCircleXmark} className="icon_error" />
-            )}
-            <span className="close" onClick={closeModal}>&times;</span>
-            <p>{modalContent}</p>
-          </div>
-        </div>
-      )}
+      {modal.isVisible && <Modal message={modal.message} type={modal.type} />}
   </div>
   )
 }
