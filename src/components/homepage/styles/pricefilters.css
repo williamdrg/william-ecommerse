@@ -2,7 +2,7 @@
 .title_filterprice {
   display: flex;
   justify-content: space-between;
-  margin: 8px;
+  margin: 8px 14px;
 }
 
 .line_filterprice {
@@ -23,7 +23,6 @@
 .filter_max {
   display: flex;
   gap: 5px;
-  /* border: 2px solid */
 }
 
 .filterprice button {
