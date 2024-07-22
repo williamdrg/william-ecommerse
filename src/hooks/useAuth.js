@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import urlBase from '../utils/urlBase';
+import { useDispatch } from 'react-redux';
+import { showModal } from '../store/slices/modal.slice';
 
 const useAuth = () => {
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch()
   const authenticate = async (patch, data) => {
     const url = `${urlBase}${patch}`;
 
@@ -18,12 +20,15 @@ const useAuth = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
+        dispatch(showModal({ message: err.response.data.message, type: 'error' }));
         setError(err.response.data.message.join(', '));
         throw new Error(err.response.data.message.join(', '));
       } else if (err.request) {
+        dispatch(showModal({ message: 'No response received from the server.', type: 'error' }));
         setError('No response received from the server.');
         throw new Error('No response received from the server.');
       } else {
+        dispatch(showModal({ message: 'Error in setting up the request.', type: 'error' }));
         setError('Error in setting up the request.');
         throw new Error('Error in setting up the request.');
       }

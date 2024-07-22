@@ -6,6 +6,7 @@ import { getUserThunk, login } from '../store/slices/auth.slice';
 import './styles/login.css'
 import UserProfile from "../components/Login/UserProfile";
 import { setLoading } from "../store/slices/loader.slice";
+import Modal from "../components/shared/Modal";
 
 const Login = () => {
   const { handleSubmit, register, reset, setValue } = useForm()
@@ -13,6 +14,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { authenticate } = useAuth();
+  const modal = useSelector(state => state.modal); 
 
   const submit = async data => {
     dispatch(setLoading(true));
@@ -54,7 +56,7 @@ const Login = () => {
           <p className="register">If you are not registered yet, <Link to='/register'>register here.</Link></p>
         </form>
       }
-      
+      {modal.isVisible && <Modal message={modal.message} type={modal.type} />}{modal.isVisible && <Modal message={modal.message} type={modal.type} />}
     </div>
   )
 }

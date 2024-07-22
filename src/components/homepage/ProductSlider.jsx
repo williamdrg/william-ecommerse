@@ -5,11 +5,11 @@ const ProductSlider = ({ products }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % products?.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + products?.length) % products?.length);
   };
 
   useEffect(() => {
