@@ -7,6 +7,8 @@ import './styles/login.css'
 import UserProfile from "../components/Login/UserProfile";
 import { setLoading } from "../store/slices/loader.slice";
 import Modal from "../components/shared/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { handleSubmit, register, reset, setValue } = useForm()
@@ -44,6 +46,11 @@ const Login = () => {
         :    
         <form className="login-form" onSubmit={handleSubmit(submit)}>
           <h2 className="login-title">Login</h2>
+          <div className="user_test">
+            <h3>Test data</h3>
+            <p><FontAwesomeIcon icon={faEnvelope}/> test-ecommerse@gmail.com</p>
+            <p><FontAwesomeIcon icon={faKey}/> test1234</p>
+          </div>
           <div>
             <label htmlFor="email">Email</label>
             <input {...register('email', {onChange: (e) => setValue('email', e.target.value.toLowerCase())})} id="email" type="text" />

@@ -6,18 +6,22 @@ import { useDispatch } from "react-redux"
 // import bearerToken from "../utils/bearerToken"
 
 const useFetch = () => {
-  const [dataApi, setdataApi] = useState()
+  const [dataApi, setDataApi] = useState()
   const dispatch = useDispatch()
 
 
   const getDataApi = async (patch) => {
     dispatch(setLoading(true));
-    const url = `${urlBase}${patch}`
-    await axios.get(url)
-      .then(res => setdataApi(res.data))
-      .catch(err => console.error(err))
-    dispatch(setLoading(false));
-  }
+    const url = `${urlBase}${patch}`;
+    try {
+      const res = await axios.get(url);
+      setDataApi(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
   return [ dataApi, getDataApi ]
 }
