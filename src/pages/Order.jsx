@@ -9,7 +9,7 @@ const Order = () => {
 
   useEffect(() => {
     dispatch(getOrderThunk())
-  },[])
+  },[dispatch])
 
   const order = useSelector(store => store.order)
  
