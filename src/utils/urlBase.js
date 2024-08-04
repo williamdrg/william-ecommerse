@@ -1,4 +1,3 @@
 
-const urlBase = 'https://api-ecommerce-ugum.onrender.com'
-
+const urlBase = import.meta.env.VITE_API_URL
 export default urlBase

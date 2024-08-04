@@ -3,7 +3,7 @@ import  './styles/navbar.css'
 import { faCartShopping, faRightFromBracket, faShop, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/auth.slice';
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { setIsCartVisible } from '../../store/slices/isVisibleCart.slice';
 import { useState, useEffect } from 'react';
 

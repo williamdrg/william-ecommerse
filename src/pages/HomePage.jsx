@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Products from "../components/homepage/Products"
 import './styles/homepage.css'
 import PriceFilters from "../components/homepage/PriceFilters"
@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFilter, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetCategories from "../components/homepage/GetCategories"
 import ProductSlider from "../components/homepage/ProductSlider"
-
 
 const HomePage = () => {
 

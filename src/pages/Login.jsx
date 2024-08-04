@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserThunk, login } from '../store/slices/auth.slice';
 import './styles/login.css'
 import UserProfile from "../components/Login/UserProfile";
-import { setLoading } from "../store/slices/loader.slice";
+
 import Modal from "../components/shared/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { LoadingContext } from "../contexts/LoadingContext";
 
 const Login = () => {
   const { handleSubmit, register, reset, setValue } = useForm()
@@ -17,9 +19,10 @@ const Login = () => {
   const navigate = useNavigate();
   const { authenticate } = useAuth();
   const modal = useSelector(state => state.modal); 
+  const { setLoad } = useContext(LoadingContext);
 
   const submit = async data => {
-    dispatch(setLoading(true));
+    setLoad(true);
     try {
       const response = await authenticate('/login', data)
         dispatch(login(response.token));
@@ -32,7 +35,7 @@ const Login = () => {
     } catch (error) {
       console.error("Error during login:", error);
     } finally {
-      dispatch(setLoading(false));
+      setLoad(false);
     }
   }
 
