@@ -19,6 +19,12 @@ const UserProfile = () => {
 
   const handlerResetPassword = async () => {
     try {
+      if (email === 'test-ecommerse@gmail.com') {
+        return dispatch(showModal({
+          message: 'Password reset is not allowed for demo accounts. Please use a different email or contact support.',
+          type: 'error'
+        }));
+      }
       await submitPassword({ email });
       dispatch(showModal({ message: 'Please check your email to reset your password.', type: 'success' }));
     } catch (error) {
