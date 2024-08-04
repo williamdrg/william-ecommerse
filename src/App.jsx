@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import Login from './pages/Login'
 import Navbar from './components/shared/Navbar'
 import Register from './pages/Register'
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeAuth } from './store/slices/auth.slice'
 import Order from './pages/Order'
@@ -28,8 +28,6 @@ function App() {
     dispatch(setLoading(true));
     dispatch(initializeAuth());
   }, [dispatch]);
-
-  console.log('Actualización del estado isLoading:', load);
 
   return (   
     <div>
