@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import Login from './pages/Login'
 import Navbar from './components/shared/Navbar'
 import Register from './pages/Register'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeAuth } from './store/slices/auth.slice'
 import Order from './pages/Order'
@@ -14,13 +14,11 @@ import ResetPassword from './pages/ResetPassword'
 import ProtectedRoutes from './pages/ProtectedRoutes'
 import ProtectedComponent from './components/shared/ProtectedComponent'
 import Loader from './components/shared/Loader'
-import { LoadingContext } from './contexts/LoadingContext'
 import { setLoading } from './store/slices/loader.slice'
 
 function App() {
 
   const dispatch = useDispatch();
-  const { load } = useContext(LoadingContext);
   const isAuthenticated = useSelector(state => state.authSlice.isAuthenticated);
   const isLoading = useSelector(state => state.loader);
 
@@ -29,9 +27,10 @@ function App() {
     dispatch(initializeAuth());
   }, [dispatch]);
 
+  console.log('loading', isLoading)
   return (   
     <div>
-      {(load || isLoading) && <Loader/>}
+      {isLoading && <Loader/>}
       <Navbar/>
       {
         isAuthenticated &&

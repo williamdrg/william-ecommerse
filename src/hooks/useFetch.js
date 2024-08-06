@@ -1,26 +1,24 @@
 import axios from "axios"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import urlBase from "../utils/urlBase.js"
-import { LoadingContext } from "../contexts/LoadingContext.jsx"
-// import bearerToken from "../utils/bearerToken"
+import { useDispatch  } from "react-redux"
+import { setLoading } from "../store/slices/loader.slice.js"
 
 const useFetch = () => {
   const [dataApi, setDataApi] = useState()
-  const { setLoad } = useContext(LoadingContext);
+  const dispatch = useDispatch()
 
-  const getDataApi = async (patch) => {
-    setLoad(true);
-    const url = `${urlBase}${patch}`;
-    try {
-      const res = await axios.get(url);
-      setDataApi(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoad(false);
-    }
+  const getDataApi = (patch) => {
+    dispatch(setLoading(true));
+    const url = `${urlBase}${patch}`
+    axios.get(url)
+    .then(res => {
+        setDataApi(res.data);
+      })
+    .catch(err => console.error(err))
+    .finally(() => dispatch(setLoading(false)))
   };
-
+  
   return [ dataApi, getDataApi ]
 }
 

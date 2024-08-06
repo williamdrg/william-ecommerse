@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import './styles/getCategories.css'
 
@@ -10,7 +10,6 @@ const GetCategories = ({ setCategory }) => {
   useEffect(() => {
     getCategories("/categories");
   }, []);
-
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);

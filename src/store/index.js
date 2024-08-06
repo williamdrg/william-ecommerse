@@ -8,7 +8,6 @@ import modalSlice from "./slices/modal.slice";
 import loadingSlice from "./slices/loader.slice";
 
 
-
 const store = configureStore({
   reducer: {
     authSlice,

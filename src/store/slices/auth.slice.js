@@ -70,7 +70,6 @@ export const checkTokenExpiration = () => dispatch => {
 };
 
 export const initializeAuth = () => async (dispatch) => {
-  dispatch(setLoading(true));
   try {
     const token = localStorage.getItem('token');
     if (token) {
@@ -83,8 +82,8 @@ export const initializeAuth = () => async (dispatch) => {
         await dispatch(getUserThunk(decoded.id));
       }
     }
-  } finally {
-    dispatch(setLoading(false));
+  } catch (err) {
+    console.error(err);
   }
 };
 

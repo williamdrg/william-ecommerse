@@ -3,14 +3,17 @@ import axios from 'axios';
 import urlBase from '../utils/urlBase';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../store/slices/modal.slice';
+import { setLoading } from '../store/slices/loader.slice';
 
 const useAuth = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch()
+
   const authenticate = async (patch, data) => {
     const url = `${urlBase}${patch}`;
 
     try {
+      dispatch(setLoading(true));
       const response = await axios.post(url, data);
       if ('token' in response.data) {
         localStorage.setItem('token', response.data.token);
@@ -32,6 +35,8 @@ const useAuth = () => {
         setError('Error in setting up the request.');
         throw new Error('Error in setting up the request.');
       }
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
